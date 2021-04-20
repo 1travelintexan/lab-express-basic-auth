@@ -54,4 +54,30 @@ router.post("/signup", (req, res, next) => {
   //   }
 });
 
+//iteration 2
+//loggin in page
+router.post("/signin", (req, res, next) => {
+  const { username, password } = req.body;
+
+  UserModel.findOne({ username })
+    .then((response) => {
+      if (!response) {
+        res.render("auth/signin.hbs", { msg: "Username is not a match" });
+      } else {
+        bcrypt.compare(password, response.password).then((isMatching) => {
+          if (isMatching) {
+            req.session.userInfo = response;
+            req.app.locals.isUserLoggedIn = true;
+            res.redirect("/profile");
+          } else {
+            res.render("auth/signin", { msg: "Password is incorrect" });
+          }
+        });
+      }
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
 module.exports = router;
