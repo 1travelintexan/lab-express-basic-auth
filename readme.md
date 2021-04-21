@@ -51,7 +51,7 @@ To complete this first iteration, you have to create the model as well as corres
 
 ## Iteration 2 | Login
 
-Once the user has signed up, he/she should be able to authenticate themselves. This means the user should be able to login to the application. Your assignment in this iteration is to create corresponding routes as well as the views to let them log in to the application.
+Once the user has signed up, he/she should be able to authenticate themselves. This means the user should be able to login to the application. Your assignment in this iteration is to create corresponding routes as well as the views to let them log in to the application.-
 
 As you know, it is not enough just to allow users to login. Users should be able to maintain their "presence" in the application (stay logged in when going from a page to a page, after the refresh), and for that, there should be the user(s) in the session. You have learned that you can use the `express-session` and `connect-mongo` npm packages to create a session.
 

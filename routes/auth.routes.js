@@ -42,16 +42,8 @@ router.post("/signup", (req, res, next) => {
       res.redirect("/");
     })
     .catch((err) => {
-      console.log("there was an error");
+      next("err");
     });
-
-  // Validate an email: it should have an @ and . symbol in it
-  //   const re = /^[^@ ]+@[^@ ]+\.[^@ ]+$/;
-  //   if (!re.test(String(username).toLowerCase())) {
-  //     res.render("auth/signup.hbs", { msg: "Please enter a valid username" });
-  //     // tell node to come out of the callback code
-  //     return;
-  //   }
 });
 
 //iteration 2
@@ -78,6 +70,21 @@ router.post("/signin", (req, res, next) => {
     .catch((err) => {
       next(err);
     });
+});
+
+//protected routes
+router.get("/profile", authorize, (req, res, next) => {
+  const { username } = req.session.userInfo;
+  res.render("profile.hbs", { username });
+});
+
+router.get("/logout", (req, res, next) => {
+  // set the global variable 'isUserLoggedIn' so that we can use it in layout.hbs
+  req.app.locals.isUserLoggedIn = false;
+
+  // deletes a specific session from mongoDB
+  req.session.destroy();
+  res.redirect("/");
 });
 
 module.exports = router;
